@@ -1,5 +1,6 @@
 {
-  "de": {
+ "translations": {
+   "de": {
     "Roborock Qrevo EdgeT": "Roborock Qrevo EdgeT",
     "Roborock verbunden": "Roborock verbunden",
     "Batterie (%)": "Batterie (%)",
@@ -24,5 +25,6 @@
     "Reinigung pausieren": "Reinigung pausieren",
     "Reinigung stoppen": "Reinigung stoppen",
     "Zur Ladestation fahren": "Zur Ladestation fahren"
-  }
+   }
+ }
 }

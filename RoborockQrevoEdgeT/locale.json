@@ -1,0 +1,28 @@
+{
+  "de": {
+    "Roborock Qrevo EdgeT": "Roborock Qrevo EdgeT",
+    "Roborock verbunden": "Roborock verbunden",
+    "Batterie (%)": "Batterie (%)",
+    "Status": "Status",
+    "Fehlercode": "Fehlercode",
+    "Reinigungsfortschritt (%)": "Reinigungsfortschritt (%)",
+    "Reinigungsfläche (m²)": "Reinigungsfläche (m²)",
+    "Reinigungsdauer (Gerätewert)": "Reinigungsdauer (Gerätewert)",
+    "Lädt": "Lädt",
+    "Aktuelle Karte": "Aktuelle Karte",
+    "Aktuelles Raumsegment": "Aktuelles Raumsegment",
+    "Aktueller Raum": "Aktueller Raum",
+    "Roboterposition X": "Roboterposition X",
+    "Roboterposition Y": "Roboterposition Y",
+    "Roboterwinkel": "Roboterwinkel",
+    "Letzte erfolgreiche Aktualisierung": "Letzte erfolgreiche Aktualisierung",
+    "Letzte Meldung": "Letzte Meldung",
+    "Räume (JSON)": "Räume (JSON)",
+    "Kartendaten (JSON)": "Kartendaten (JSON)",
+    "Jetzt aktualisieren": "Jetzt aktualisieren",
+    "Reinigung starten": "Reinigung starten",
+    "Reinigung pausieren": "Reinigung pausieren",
+    "Reinigung stoppen": "Reinigung stoppen",
+    "Zur Ladestation fahren": "Zur Ladestation fahren"
+  }
+}

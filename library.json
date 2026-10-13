@@ -1,0 +1,13 @@
+{
+  "$schema": "https://www.symcon.de/assets/files/validation/librarySchema.json",
+  "id": "{17A89CB1-77D6-4ABF-8C23-B26F0BA56B48}",
+  "author": "Community",
+  "name": "Roborock Qrevo EdgeT",
+  "url": "",
+  "compatibility": {
+    "version": "8.1"
+  },
+  "version": "1.0",
+  "build": 1,
+  "date": 0
+}

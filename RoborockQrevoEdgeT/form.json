@@ -1,0 +1,70 @@
+{
+  "elements": [
+    {
+      "type": "Label",
+      "caption": "Roborock Qrevo EdgeT – direkte Anbindung über python-roborock; kein Home Assistant erforderlich."
+    },
+    {
+      "type": "CheckBox",
+      "name": "Enabled",
+      "caption": "Modul aktivieren"
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "PythonPath",
+      "caption": "Pfad zur Python-Umgebung"
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "DeviceName",
+      "caption": "Roborock-Gerätename"
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "SessionFile",
+      "caption": "Datei mit Roborock-Anmeldesitzung"
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "CacheFile",
+      "caption": "Datei für Gerätecache"
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "ExportDirectory",
+      "caption": "Zielverzeichnis für Kartenexport"
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "PollInterval",
+      "caption": "Aktualisierungsintervall (Sekunden)",
+      "minimum": 60,
+      "maximum": 3600,
+      "digits": 0
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "CommandTimeout",
+      "caption": "Timeout für Python-Aufrufe (Sekunden)",
+      "minimum": 30,
+      "maximum": 300,
+      "digits": 0
+    },
+    {
+      "type": "Label",
+      "caption": "Vor dem ersten Start die Roborock-Anmeldung gemäß README einmalig per SSH/Terminal einrichten. Der Symcon-Dienst benötigt Zugriff auf Python, Brückenskript, Session- und Cache-Datei."
+    }
+  ],
+  "actions": [
+    {
+      "type": "Button",
+      "caption": "Verbindung testen und Werte aktualisieren",
+      "onClick": "RQT_TestConnection($id);"
+    },
+    {
+      "type": "Button",
+      "caption": "Jetzt aktualisieren",
+      "onClick": "RQT_RefreshNow($id);"
+    }
+  ]
+}

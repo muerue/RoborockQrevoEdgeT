@@ -1,0 +1,16 @@
+{
+  "$schema": "https://www.symcon.de/assets/files/validation/moduleSchema.json",
+  "id": "{A880C151-27A3-4CA1-9642-5BEDB68182CE}",
+  "name": "RoborockQrevoEdgeT",
+  "type": 3,
+  "vendor": "Community",
+  "url": "",
+  "aliases": [
+    "Roborock Qrevo EdgeT",
+    "Roborock Qrevo EdgeT (python-roborock)"
+  ],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "RQT"
+}

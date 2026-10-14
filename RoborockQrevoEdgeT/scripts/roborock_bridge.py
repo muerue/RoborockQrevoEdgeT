@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from roborock.devices.device_manager import UserParams, create_device_manager
-from roborock.devices.file_cache import FileCache, load_value, store_value
+from roborock.devices.file_cache import load_value, store_value
 from roborock.roborock_typing import RoborockCommand
 from roborock.web_api import RoborockApiClient
 
@@ -103,12 +103,18 @@ async def load_manager(session_file: Path, cache_file: Path, device_name: str):
             f"Keine Roborock-Anmeldung gefunden ({session_file}). "
             "Bitte roborock_bridge.py --login einmal interaktiv ausführen."
         )
-    ensure_private_parent(cache_file)
     params = await load_value(session_file)
     if params is None:
         raise RuntimeError("Die gespeicherte Roborock-Anmeldung ist leer oder ungültig. Bitte erneut anmelden.")
-    cache = FileCache(cache_file)
-    manager = await create_device_manager(params, cache=cache)
+
+    # WICHTIG: In python-roborock 7.12.3 kann CacheData eine lokal definierte
+    # Callback-Funktion (V1Channel.rpc_channel.<locals>.rpc_strategies_cb)
+    # enthalten. pickle.dumps() kann diese Closure nicht serialisieren und
+    # hinterlässt eine 0-Byte-Datei, die beim nächsten Start EOFError auslöst.
+    # Daher wird hier bewusst kein FileCache verwendet. Die Geräte-API und
+    # die dauerhaft gespeicherte UserParams-Sitzung funktionieren ohne ihn.
+    # cache_file bleibt als CLI-Argument für bestehende IP-Symcon-Instanzen erhalten.
+    manager = await create_device_manager(params)
     try:
         devices = await manager.get_devices()
         device = next((item for item in devices if item.name == device_name), None)
@@ -117,13 +123,9 @@ async def load_manager(session_file: Path, cache_file: Path, device_name: str):
             raise RuntimeError(f"Gerät '{device_name}' nicht gefunden. Gefundene Geräte: {available or '(keine)'}")
         if not field(device, "v1_properties"):
             raise RuntimeError(f"Gerät '{device_name}' stellt keine V1-Properties bereit.")
-        return params, cache, manager, device
+        return params, manager, device
     except Exception:
         await close_quietly(manager, "DeviceManager")
-        try:
-            await maybe_await(cache.flush())
-        except Exception:
-            pass
         raise
 
 
@@ -288,7 +290,7 @@ async def execute(args: argparse.Namespace, payload: dict[str, Any] | None) -> d
         raise ValueError("Eingabe-JSON fehlt.")
 
     action = str(payload.get("action", "status")).strip().lower()
-    params, cache, manager, device = await load_manager(
+    params, manager, device = await load_manager(
         Path(args.session_file), Path(args.cache_file), args.device_name
     )
     try:
@@ -302,16 +304,12 @@ async def execute(args: argparse.Namespace, payload: dict[str, Any] | None) -> d
     finally:
         await close_quietly(device, "RoborockDevice")
         await close_quietly(manager, "DeviceManager")
-        try:
-            await maybe_await(cache.flush())
-        except Exception as exc:
-            log(f"Hinweis: Cache konnte nicht geschrieben werden: {type(exc).__name__}: {exc}")
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--session-file", required=True)
-    parser.add_argument("--cache-file", required=True)
+    parser.add_argument("--cache-file", required=True, help="Kompatibilitätsoption für bestehende IP-Symcon-Instanzen; wird aktuell nicht verwendet")
     parser.add_argument("--device-name", default="Roborock Qrevo EdgeT")
     parser.add_argument("--export-dir", default="/root/roborock_export")
     parser.add_argument("--login", action="store_true", help="Interaktive Ersteinrichtung der Roborock-Anmeldung")
